@@ -19,7 +19,6 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
     EntityManager entityManager;
 
     @Transactional
-
     public List<Customer> findCustomersByCourse(Long courseId){
         List<Customer> results = null;
         Session session = entityManager.unwrap(Session.class);
@@ -37,4 +36,42 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
         }
         return results;
     };
+    @Transactional
+    public List<Customer> findCustomerByTownAndCourse(String town, String course){
+        List<Customer> results = null;
+        Session session = entityManager.unwrap((Session.class));
+        try{
+            Criteria cr = session.createCriteria(Customer.class);
+            cr.createAlias("bookings", "bookingsAlias");
+            cr.createAlias("bookingsAlias.course", "courseAlias");
+            cr.add(Restrictions.eq("courseAlias.name", course));
+            cr.add(Restrictions.eq("courseAlias.town", town));
+            results = cr.list();
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+
+    @Transactional
+    public List<Customer> findCustomerOverAgeByTownAndCourse(int age, String town, String course) {
+        List<Customer> results = null;
+        Session session = entityManager.unwrap((Session.class));
+        try {
+            Criteria cr = session.createCriteria(Customer.class);
+            cr.createAlias("bookings", "bookingsAlias");
+            cr.createAlias("bookingsAlias.course", "courseAlias");
+            cr.add(Restrictions.eq("courseAlias.name", course));
+            cr.add(Restrictions.eq("courseAlias.town", town));
+            cr.add(Restrictions.gt("age", age));
+            results = cr.list();
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
 }

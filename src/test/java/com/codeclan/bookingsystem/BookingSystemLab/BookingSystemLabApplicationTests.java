@@ -58,4 +58,18 @@ public class BookingSystemLabApplicationTests {
 		List<Booking> found = bookingRepository.findBookingsByDate("10-12-19");
 		assertEquals("10-12-19", found.get(0).getDate());
 	}
+
+	@Test
+	public void findCustomerByTownAndByCourse() {
+		List<Customer> found = customerRepository.findCustomerByTownAndCourse("Munich", "Java");
+		assertEquals("Walter", found.get(0).getName());
+	}
+
+	@Test
+	public void findCustomerOverAgeByTownAndByCourse() {
+		List<Customer> found = customerRepository.findCustomerOverAgeByTownAndCourse(40, "Munich", "Java");
+		assertEquals("Walter", found.get(0).getName());
+	}
+
+
 }
