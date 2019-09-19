@@ -1,6 +1,8 @@
 package com.codeclan.bookingsystem.BookingSystemLab;
 
+import com.codeclan.bookingsystem.BookingSystemLab.models.Booking;
 import com.codeclan.bookingsystem.BookingSystemLab.models.Course;
+import com.codeclan.bookingsystem.BookingSystemLab.models.Customer;
 import com.codeclan.bookingsystem.BookingSystemLab.repositories.BookingRepository.BookingRepository;
 import com.codeclan.bookingsystem.BookingSystemLab.repositories.CourseRepository.CourseRepository;
 import com.codeclan.bookingsystem.BookingSystemLab.repositories.CustomerRepository.CustomerRepository;
@@ -37,5 +39,23 @@ public class BookingSystemLabApplicationTests {
 		assertEquals("Java", found.get(0).getName());
 	}
 
+	//Get all customers for a given course
 
+	@Test
+	public void getCustomersByCourse() {
+		List<Customer> found = customerRepository.findCustomersByCourse(1L);
+		assertEquals("Sarah", found.get(0).getName());
+	}
+
+	@Test
+	public void getCoursesByCustomer() {
+		List<Course> found = courseRepository.findCoursesByCustomer(1L);
+		assertEquals("Java", found.get(0).getName());
+	}
+
+	@Test
+	public void findAllBookingsByDate() {
+		List<Booking> found = bookingRepository.findBookingsByDate("10-12-19");
+		assertEquals("10-12-19", found.get(0).getDate());
+	}
 }

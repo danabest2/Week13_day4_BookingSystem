@@ -5,6 +5,7 @@ import com.codeclan.bookingsystem.BookingSystemLab.models.Customer;
 import com.codeclan.bookingsystem.BookingSystemLab.repositories.CustomerRepository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +21,10 @@ public class CustomerController {
     @GetMapping
     public List<Customer> getAllCustomers(){
         return customerRepository.findAll();
+    }
+
+    @GetMapping(value = "/course/{courseId}")
+    public List<Customer> findCustomersByCourse(@PathVariable Long courseId){
+        return customerRepository.findCustomersByCourse(courseId);
     }
 }
